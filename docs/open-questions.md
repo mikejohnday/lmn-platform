@@ -200,7 +200,11 @@ That fallback existed solely because no evaluated commercial form plugin confirm
 
 ---
 
-### OQ-14 — Changing submission type after entering Step 2 data 🟡
+### ~~OQ-14 — Changing submission type after entering Step 2 data 🟡~~ ✅ RESOLVED
+
+> **CLOSED 14 Aug 2026 by `amendments.md` AM-06.** Step 2 values for both the Mix and Demo/Track paths are **preserved**, not cleared, across a mid-form submission-type change.
+>
+> This is no longer an open question. Do not reopen it. The record below is retained for audit only.
 
 **Prototype blocker:** No — a reasonable default is stated below.
 
@@ -437,3 +441,6 @@ Decisions confirmed during this refactor, recorded so they are not relitigated.
 | 13 Aug 2026 | **AM-05** — accessibility baseline adopted for the prototype. Closes OQ-09 at prototype level | Mike |
 | 13 Aug 2026 | Stack approved: Next.js App Router · React · strict TypeScript · CSS Modules · Playwright + `node:test`. No form/state/UI/validation libraries | Mike |
 | 13 Aug 2026 | REQ-39 (browser autofill) reclassified from requirement to guidance — its only source is the historical Concepts draft, elevated by the since-retired KAN-19 | Corrective governance pass |
+| 14 Aug 2026 | Final Step 2 submit redirects via `router.replace`, not `router.push` — thank-you is a clean history dead-end rather than leaving the filled Step 2 form reachable via browser-forward. No document addresses push vs. replace; not a numbered OQ/AM since none was ever raised | Mike |
+| 14 Aug 2026 | **AM-06** — Step 2 values preserved across a mid-form submission-type change. Closes OQ-14 | Mike |
+| 14 Aug 2026 | **AM-07** — submission-type cards confirmed side-by-side on desktop; §4.3's "vertically stacked" wording superseded on desktop only | Mike |

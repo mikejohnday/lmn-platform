@@ -1,0 +1,73 @@
+/* Mobile-first base: 375-414px */
+
+.page {
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  padding: var(--space-6) var(--space-4);
+}
+
+.container {
+  width: 100%;
+  max-width: var(--content-max-width);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.logoGlow {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-4) 0;
+  margin-bottom: var(--space-2);
+  background: radial-gradient(
+    ellipse 60% 100% at 50% 40%,
+    color-mix(in srgb, var(--color-accent-earth) 35%, transparent),
+    transparent 70%
+  );
+}
+
+.logo {
+  width: 110px;
+  height: auto;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  line-height: 1.1;
+  font-weight: 700;
+  font-synthesis: none;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--space-2);
+  text-align: center;
+}
+
+.intro p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.intro p:last-child {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+/* Enhancement: matches old max-width:480 desktop/mobile split, inverted for mobile-first authoring */
+@media (min-width: 481px) {
+  .page {
+    padding: var(--space-8) var(--space-4);
+  }
+
+  .intro p {
+    font-size: 1.0625rem;
+  }
+}

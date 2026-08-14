@@ -1,0 +1,489 @@
+/* Mobile-first base: 375-414px */
+
+.shell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+/* Enhancement: matches old max-width:480 desktop/mobile split, inverted for mobile-first authoring */
+@media (min-width: 481px) {
+  .shell {
+    padding: var(--space-6);
+    gap: var(--space-6);
+  }
+}
+
+/* Progress indicator */
+
+.progress {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.progressStep {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+  opacity: 0.5;
+}
+
+.progressStepActive {
+  opacity: 1;
+}
+
+.progressStepComplete {
+  opacity: 1;
+}
+
+.progressStepComplete .progressIndex {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: var(--color-bg);
+}
+
+.progressConnector {
+  flex: 1;
+  height: 1px;
+  min-width: var(--space-3);
+  background: var(--color-border-strong);
+}
+
+.progressIndex {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-strong);
+  font-size: 0.6875rem;
+  font-weight: 700;
+}
+
+.progressStepActive .progressIndex {
+  /* Fill-only use of the earth accent — pairs with light text for contrast, never used as a border/outline. */
+  background: var(--color-accent-earth);
+  border-color: var(--color-accent-earth);
+  color: var(--color-text);
+}
+
+.progressLabel {
+  font-family: var(--font-ui);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+/* Enhancement: mobile-first progress density tuning restored to pre-mobile-pass desktop values */
+@media (min-width: 481px) {
+  .progress {
+    gap: var(--space-2);
+  }
+
+  .progressStep {
+    gap: var(--space-2);
+  }
+
+  .progressConnector {
+    min-width: var(--space-5);
+  }
+
+  .progressIndex {
+    width: 24px;
+    height: 24px;
+    font-size: 0.75rem;
+  }
+
+  .progressLabel {
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+}
+
+/* Submission type selector */
+
+.typeFieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.typeLegend {
+  padding: 0;
+  margin: 0 0 var(--space-1);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.typeCards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+
+/* Enhancement: matches old max-width:480 desktop/mobile split, inverted for mobile-first authoring.
+   Side-by-side desktop cards kept as built — ux-specification.md §4.3's "vertically stacked" wording
+   is a flagged discrepancy, not changed here. */
+@media (min-width: 481px) {
+  .typeCards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.typeCard {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 64px;
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  transition: border-color 0.15s ease, background-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.typeCard:hover {
+  border-color: var(--color-accent);
+  background: var(--color-surface-hover);
+}
+
+.typeCard:focus-within {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.typeCardSelected {
+  border-color: var(--color-accent);
+  background: var(--color-surface-hover);
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+
+.typeCardInput {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+}
+
+.typeCardTitle {
+  color: var(--color-text);
+}
+
+/* Step 1 form layout */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* Enhancement: matches old max-width:480 desktop/mobile split, inverted for mobile-first authoring */
+@media (min-width: 481px) {
+  .form {
+    gap: var(--space-6);
+  }
+}
+
+.sectionHeading {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.sectionHeading:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+.fieldsGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.fieldRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+/* Enhancement: intentionally >768px per UX decision 2026-08-14 — 768px itself must stay
+   single-column (ux-specification.md §9.2 tested breakpoint). Pairing only starts above it. */
+@media (min-width: 800px) {
+  .fieldRow {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Fields */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.fieldLabel {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.requiredMark {
+  color: var(--color-accent);
+}
+
+.optionalMark {
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+.fieldInputWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.fieldInput,
+.fieldTextarea,
+.fieldSelect {
+  width: 100%;
+  min-height: 48px;
+  padding: var(--space-3) var(--space-7) var(--space-3) var(--space-4);
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  transition: border-color 0.15s ease;
+}
+
+.fieldTextarea {
+  min-height: auto;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.fieldInput:focus,
+.fieldTextarea:focus,
+.fieldSelect:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.fieldInputError {
+  border-color: #ef4444;
+}
+
+.fieldInputValid {
+  border-color: #22c55e;
+}
+
+.fieldTick {
+  position: absolute;
+  right: var(--space-3);
+  color: #22c55e;
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+.fieldMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.fieldHelper {
+  flex: 1;
+}
+
+.fieldCounter {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.fieldCounterAmber {
+  color: #f59e0b;
+}
+
+.fieldCounterRed {
+  color: #ef4444;
+}
+
+.fieldError {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: #ef4444;
+}
+
+.helperMobile {
+  display: inline;
+}
+
+.helperDesktop {
+  display: none;
+}
+
+/* Enhancement: matches old max-width:480 desktop/mobile split, inverted for mobile-first authoring */
+@media (min-width: 481px) {
+  .helperMobile {
+    display: none;
+  }
+
+  .helperDesktop {
+    display: inline;
+  }
+}
+
+/* Primary CTA */
+
+.primaryButton {
+  width: 100%;
+  min-height: 48px;
+  padding: var(--space-3) var(--space-5);
+  font-family: var(--font-ui);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-accent-text);
+  background: var(--color-accent);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.primaryButton:hover {
+  filter: brightness(1.08);
+}
+
+.primaryButton:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Secondary CTA (Step 2 Back) */
+
+.backButton {
+  width: 100%;
+  min-height: 48px;
+  padding: var(--space-3) var(--space-5);
+  font-family: var(--font-ui);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-text);
+  background: transparent;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.backButton:hover {
+  border-color: var(--color-text-muted);
+  background: var(--color-surface-hover);
+}
+
+.backButton:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Step 2 action row — Back stacks above Submit on mobile per ux-specification.md §7 */
+
+.actionRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+@media (min-width: 481px) {
+  .actionRow {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .actionRow .backButton,
+  .actionRow .primaryButton {
+    width: auto;
+  }
+}
+
+/* Consent checkboxes */
+
+.consentGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.checkboxField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  min-height: 48px;
+  padding: var(--space-2) 0;
+  cursor: pointer;
+}
+
+.checkboxInput {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+.checkboxText {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+/* Accessibility utility */
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

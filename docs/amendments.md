@@ -135,6 +135,34 @@ This is the reading of Mike's instruction of 13 Aug 2026, which stated two separ
 
 ---
 
+## AM-06 — Step 2 values are preserved across a mid-form submission-type change
+
+**Closes:** OQ-14
+**Date:** 14 August 2026 · **Decided by:** Mike Day
+
+**Supersedes:** nothing signed. OQ-14 noted "discarding" the abandoned path's Step 2 values as *a* safe implementation default, not an approved one, and left the actual behaviour open.
+
+**Now reads:** if a user returns to Step 1 from Step 2 and changes the submission type, previously entered Step 2 values for **both** the Mix and Demo/Track paths are retained (not cleared), independent of which path is currently displayed. Switching back to a path restores whatever was previously entered for it.
+
+**Rationale:** the reversible, lower-risk default — no approved document required discarding, and retaining data never surprises a user with silent data loss.
+
+**Applied to:** `open-questions.md` (OQ-14 struck)
+
+---
+
+## AM-07 — Submission-type cards are side-by-side on desktop; "vertically stacked" wording superseded
+
+**Closes:** the desktop-layout ambiguity in `ux-specification.md` §4.3
+**Date:** 14 August 2026 · **Decided by:** Mike Day
+
+**Supersedes:** `ux-specification.md` §4.3's instruction that the submission-type radio buttons are *"vertically stacked."*
+
+**Now reads:** the Mix/Demo selector renders as two cards side by side on desktop (≥481px), stacking to a single column on mobile — matching the built and shipped layout. The "vertically stacked" wording described the mobile presentation; it did not anticipate the desktop two-column treatment introduced during the mobile-first pass and is superseded on desktop only. Mobile remains a single-column stack, consistent with the original wording.
+
+**Applied to:** `ux-specification.md` §4.3
+
+---
+
 ## Amendments still open
 
 None. All amendments recorded above are decided and applied.
