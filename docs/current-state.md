@@ -1,10 +1,10 @@
 # LMN Platform — Current State
 
-*Last updated: 2026-08-15, by Claude Code (homepage V1 checkpoint).*
+*Last updated: 2026-08-15, by Claude Code (homepage photo-led refinement checkpoint).*
 
 ## Current Focus
 
-Homepage/site-shell V1 has just been built on `feature/homepage` and is being checkpointed now. It is a first working version, not a final design — see Intentional Deferrals. The submission-flow prototype remains stable and was re-verified (not modified) as part of this work.
+Homepage/site-shell has gone through two passes on `feature/homepage`, not merged to `main`: a structural V1, then a creative/art-direction refinement using real LMN event photography. It is a strong first version, not a final design freeze — see Intentional Deferrals. The submission-flow prototype remains stable and was re-verified (not modified) after both passes.
 
 ## Where We Are
 
@@ -13,17 +13,23 @@ Homepage/site-shell V1 has just been built on `feature/homepage` and is being ch
 - `/submit` (Step 1 + both Step 2 branches), `/submit/thank-you`, accessibility baseline (AM-05), mobile-first CSS, LMN brand pass (Adobe Fonts, logo, provisional dark/earthy palette — see OQ-13).
 - Full detail in git history (`9e6fe56`, `6db06ef`) — not repeated here.
 
-**Complete — homepage V1** (built 15 Aug 2026, on `feature/homepage`, not merged to `main`):
+**Complete — homepage, photo-led refinement** (built 15 Aug 2026, on `feature/homepage`, not merged to `main`):
 
-- Shared site shell: `app/components/SiteHeader.tsx` (sticky header, logo → `/`, "Radio"/"Submit" nav, mobile hamburger menu) and `app/components/SiteFooter.tsx` (brand line, nav repeat, social links). Both wired into `app/layout.tsx`, so they render on every route including `/submit` and `/submit/thank-you`.
-- `/` (`app/page.tsx`) rebuilt from the scaffold placeholder into a real homepage: hero (logo, "LMN" headline, identity line reused verbatim from the existing `/submit` intro copy, Submit + SoundCloud CTAs), an `id="radio"` section with a **live SoundCloud oEmbed iframe** of the real `soundcloud.com/lmnuk` profile (no API/auth/backend — just the public embed URL), a submissions CTA section, and a "Stay Connected" section (Instagram / SoundCloud / Linktree links).
-- Content and visual direction were sourced from a live in-browser visit to `lmnuk.com`, its Linktree, and the real LMN SoundCloud profile on 15 Aug 2026 (not the earlier text-only fetch, which returned almost nothing useful — the real site is a minimal atmospheric teaser page). This is where the dark/botanical/neon-glow direction, the numbered-mix-series framing of "LMN Radio", and the "Demos / Mixes" nav pattern (confirmed on LMN's own SoundCloud sidebar) came from.
-- New design token `--color-signal: #ff3d6e` added to `app/globals.css` — a neon pink/magenta accent evidenced from the real site/SoundCloud avatar glow, used only as a subtle homepage hero glow. Provisional, like the rest of the palette (OQ-13), not a confirmed brand hex.
+- Shared site shell unchanged from V1: `app/components/SiteHeader.tsx` (sticky header, logo → `/`, "Radio"/"Submit" nav, mobile hamburger menu), wired into `app/layout.tsx` on every route.
+- `/` (`app/page.tsx`) rebuilt again from the V1 structural version into a photo-led, editorial homepage using real LMN event photography supplied by Mike under `public/brand/images/` (10 photos added; 4 curated and used, the rest left available but not forced into the page):
+  - **Hero** — `IMG_4430.jpg` (the real LMN neon sign glowing on brick, crowd silhouettes below), near-full-viewport-height, full-bleed, content anchored bottom-left (not centered). The redundant "LMN" text heading below the logo from V1 was removed — just the small logo mark, a tagline, and two understated text-link CTAs (no filled buttons).
+  - **Radio** (`id="radio"`) — `CNV000022.jpg` (crowd with hands raised at the DJ booth) as a full-bleed backdrop; the SoundCloud embed (same live `soundcloud.com/lmnuk` oEmbed as V1, functionality unchanged) now sits inside a small translucent/blurred frame instead of a plain white box.
+  - **Atmosphere break** — `IMG_4305.jpg` (golden backlit crowd), a short wordless full-bleed strip between Radio and Submit for scroll rhythm/negative space.
+  - **Submit** — `CNV00016.JPG` (candid smiling portrait) paired asymmetrically with the copy (image + text side by side on desktop, stacked on mobile); reduced to a single text-link CTA, no repeated buttons.
+  - The heavy rounded-card panel treatment from V1 (bordered boxes for Radio/Submit/Connect) is gone — these are now full-bleed photography sections.
+- "Stay Connected" is no longer a standalone section — folded into `app/components/SiteFooter.tsx` as a small "Stay connected" label above the existing Instagram/SoundCloud/Linktree links (`app/components/SiteFooter.module.css` updated accordingly).
+- New design token from V1, unchanged: `--color-signal: #ff3d6e` (provisional neon accent, OQ-13).
+- One real issue hit and fixed during this pass, not a lingering bug: the hero photo initially rendered near-solid-black because `IMG_4430.jpg` is a very dark, low-key night shot and the wide hero crop landed on mostly-black wall/ceiling. Fixed with a `brightness(1.4)` CSS filter on the image, a lighter scrim gradient, and a retuned `object-position` — confirmed visually at mobile and desktop after the fix.
 
 **Not started:**
 
 - Any persistence, transactional email, spreadsheet integration, hosting, deployment — correctly deferred per PRD §9.2/§10, not gaps.
-- No further homepage content sections beyond what's listed above (e.g. no events section — deliberately skipped, no real current event data existed to show honestly).
+- No further homepage content sections beyond what's listed above (still no Events section — no real event data existed to show honestly).
 
 **Needs verification:**
 
@@ -31,12 +37,13 @@ Homepage/site-shell V1 has just been built on `feature/homepage` and is being ch
 
 ## Verified
 
-(15 Aug 2026, in-browser and via CLI)
+(15 Aug 2026, in-browser and via CLI, after the photo-led refinement)
 
-- `npx tsc --noEmit`, `npm run lint`, and `npm run build` (production build) all clean.
-- Homepage: no horizontal overflow at 375/414/768/800px (iframe-harness check); mobile hamburger menu opens/closes correctly and shows Radio/Submit links; SoundCloud embed renders and lists LMN's live track feed.
-- Regression check on the protected submission flow with the new header/footer present: `/submit` and `/submit/thank-you` render correctly; conditional Country/City/SoundCloud required-toggle still fires; "Please select a submission type" (AM-04) still fires; focus-to-first-invalid-field (AM-05) still works. No regressions found.
-- One incident during this session, resolved, not a code issue: running `npm run build` while `next dev` was still running corrupted the dev server's `.next` cache (stale webpack chunk error, blank `/submit` page). Fixed by stopping only the dev-server process bound to port 3002 (left an unrelated node process on port 3000 alone — it predates this session and wasn't touched) and restarting clean. Confirmed all three routes healthy afterward. No app code was at fault.
+- `npx tsc --noEmit` and `npm run lint` clean.
+- No horizontal overflow at 375/414/768/800px (iframe-harness check) across all homepage sections including the full-bleed image sections.
+- Hero, Radio, Atmosphere, and Submit sections all visually checked at both mobile (375×812) and desktop widths — photography displays correctly, no broken crops, SoundCloud embed frame renders and lists LMN's live track feed.
+- Regression check with the new homepage present: `/submit` renders and functions identically (validation, conditional required toggle, step transition); `/submit/thank-you` and the footer at the bottom of both routes render correctly with the updated `SiteFooter`.
+- `npm run build` (production build) was verified clean after the earlier V1 pass; not re-run after this photo-led pass specifically — worth a build check before the next production-adjacent step given `public/brand/images/` adds ~42MB of source photography (served through Next's image optimizer, not shipped raw, but worth knowing for repo size).
 
 ## Known Issues / Incomplete Work
 
@@ -44,9 +51,10 @@ None currently open.
 
 ## Intentional Deferrals
 
-- **Homepage V1 is a first working version, not a design freeze.** Structure, identity, and navigation are in place; further visual refinement is expected later and should not be read as unfinished/broken.
+- **Homepage is a strong first version, not a design freeze.** Structure, identity, navigation, and now art direction are in place; further visual refinement is expected later and should not be read as unfinished/broken.
+- **6 of the 10 supplied photos in `public/brand/images/` are unused** (`CNV000016.jpg`, `CNV000017.jpg`, `CNV00004 (1).JPG`, `CNV00006 (1).JPG`, `CNV00009.JPG`, `IMG_4455.jpg`) — deliberately curated out rather than forced onto the page. Available for a future pass if wanted.
 - **No Events section on the homepage.** Real upcoming event data wasn't available from the public LMN site/SoundCloud at build time — skipped rather than inventing placeholder dates.
-- **OQ-13 — LMN brand tokens**, including the new `--color-signal` token, remain provisional placeholders, not confirmed brand hex values.
+- **OQ-13 — LMN brand tokens**, including `--color-signal`, remain provisional placeholders, not confirmed brand hex values.
 - **Progress indicator's mobile-only text variant** (`ux-specification.md` §4.1/§9.2) — known, flagged, deliberately not built yet.
 - **OQ-17 — "Mix title" field** — not built; would need an explicit KAN-18-style amendment from Mike to reinstate.
 - Everything in PRD §9.2/§10 (datastore, transactional email, spreadsheet integration, hosting, deployment, SPF/DKIM, rate limiting, monitoring) — deferred by design.
@@ -54,10 +62,11 @@ None currently open.
 
 ## Stable / Protected Areas
 
-- `/submit` (Step 1 + both Step 2 branches) — working, spec-verified, re-verified compatible with the new site shell. Do not casually refactor.
-- `/submit/thank-you` — working, spec-verified, re-verified compatible with the new site shell.
+- `/submit` (Step 1 + both Step 2 branches) — working, spec-verified, re-verified compatible with the homepage/site shell. Do not casually refactor.
+- `/submit/thank-you` — working, spec-verified, re-verified compatible with the updated footer.
 - `app/globals.css` design tokens — brand values are provisional but the *mechanism* (isolated CSS custom properties) is deliberate; don't hardcode colors/fonts elsewhere.
-- `app/components/SiteHeader.tsx` / `SiteFooter.tsx` — now shared across every route via `app/layout.tsx`; changes here affect `/submit` and `/submit/thank-you` too, so check both when editing.
+- `app/components/SiteHeader.tsx` — unchanged in this pass, shared across every route via `app/layout.tsx`.
+- `app/components/SiteFooter.tsx` / `SiteFooter.module.css` — now carries the "Stay connected" social messaging; shared across every route, so changes here affect `/submit` and `/submit/thank-you` too.
 
 ## Next Time
 
@@ -66,4 +75,4 @@ None currently open.
 ## Resume Notes
 
 - Work is on branch `feature/homepage`, not merged to `main`. This checkpoint commits and pushes that branch only.
-- Local dev server was run on port 3002 during this session (port 3000 was occupied by an unrelated, pre-existing process — left alone).
+- Local dev server was run on port 3002 during this session (port 3000 was occupied by an unrelated, pre-existing process — left alone). Running `npm run build` while `next dev` is active against the same `.next` directory corrupts the dev server's cache — stop `next dev` first, or use a separate build check.

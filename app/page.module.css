@@ -1,61 +1,104 @@
-/* Mobile-first base: 375-414px */
+/* Mobile-first base: 375-414px. Full-bleed sections are direct children of
+   <main> (no page-level max-width/padding) — only the text content inside
+   each section is constrained, so photography can run to the viewport edge. */
 
 .page {
   display: flex;
   flex-direction: column;
-  gap: var(--space-8);
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: var(--space-6) var(--space-4) 0;
 }
 
-/* Hero */
+.sectionHeading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 7vw, 2.5rem);
+  font-weight: 700;
+  font-synthesis: none;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.sectionText {
+  margin: 0;
+  max-width: 44ch;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+/* Text-link CTA — deliberately not a filled button, to keep chrome light */
+
+.linkCta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  font-family: var(--font-ui);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--color-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-border-strong);
+  padding-bottom: 2px;
+  width: fit-content;
+  transition: border-color 0.15s ease, opacity 0.15s ease;
+}
+
+.linkCta:hover {
+  border-color: var(--color-text);
+}
+
+.linkCta:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+/* Hero — near-full-screen, photo-led, content anchored to the bottom-left */
 
 .hero {
+  position: relative;
+  min-height: 92dvh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: var(--space-3);
-  padding: var(--space-6) 0 var(--space-4);
+  align-items: flex-end;
+  overflow: hidden;
+  isolation: isolate;
 }
 
-.heroGlow {
+.heroImage {
+  object-fit: cover;
+  z-index: -2;
+  filter: brightness(1.4) contrast(1.05) saturate(1.1);
+}
+
+.heroScrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--color-bg) 85%, transparent) 0%,
+    color-mix(in srgb, var(--color-bg) 35%, transparent) 30%,
+    transparent 60%
+  );
+}
+
+.heroContent {
   display: flex;
-  justify-content: center;
-  padding: var(--space-4) 0;
-  margin-bottom: var(--space-2);
-  background: radial-gradient(
-      ellipse 55% 90% at 50% 35%,
-      color-mix(in srgb, var(--color-signal) 22%, transparent),
-      transparent 65%
-    ),
-    radial-gradient(
-      ellipse 70% 100% at 50% 55%,
-      color-mix(in srgb, var(--color-accent-earth) 40%, transparent),
-      transparent 70%
-    );
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-6) var(--space-4) var(--space-6);
 }
 
 .heroLogo {
-  width: 140px;
+  width: 60px;
   height: auto;
-}
-
-.heroTitle {
-  font-family: var(--font-display);
-  font-size: clamp(3rem, 14vw, 5.5rem);
-  line-height: 1;
-  font-weight: 700;
-  font-synthesis: none;
-  letter-spacing: -0.01em;
-  margin: 0;
 }
 
 .heroText {
   margin: 0;
-  max-width: 44ch;
-  color: var(--color-text-muted);
+  max-width: 40ch;
+  color: var(--color-text);
   font-size: 1.0625rem;
   line-height: 1.6;
 }
@@ -63,147 +106,153 @@
 .heroActions {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: flex-start;
   gap: var(--space-3);
-  width: 100%;
-  max-width: 360px;
-  margin-top: var(--space-3);
+  margin-top: var(--space-1);
 }
 
-/* Shared section chrome */
+/* Radio — full-bleed photo with an editorial content block + a framed embed */
 
-.radioSection,
-.submitSection,
-.connectSection {
+.radioSection {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 80vh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.radioImage {
+  object-fit: cover;
+  z-index: -2;
+}
+
+.radioScrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-bg) 78%, transparent) 0%,
+    color-mix(in srgb, var(--color-bg) 55%, transparent) 45%,
+    color-mix(in srgb, var(--color-bg) 82%, transparent) 100%
+  );
+}
+
+.radioContent {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
   align-items: flex-start;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-5);
-  scroll-margin-top: 80px;
-}
-
-.sectionHeading {
-  margin: 0;
-  font-family: var(--font-ui);
-  font-size: 0.9375rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--color-text-muted);
-}
-
-.sectionText {
-  margin: 0;
-  max-width: 60ch;
-  color: var(--color-text-muted);
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-/* Radio embed */
-
-.radioEmbedWrap {
+  gap: var(--space-4);
   width: 100%;
-  border-radius: var(--radius-md);
-  overflow: hidden;
+  max-width: 560px;
+  padding: var(--space-7) var(--space-4);
+}
+
+.radioFrame {
+  width: 100%;
+  background: color-mix(in srgb, var(--color-bg) 55%, transparent);
+  backdrop-filter: blur(6px);
   border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  padding: var(--space-2);
 }
 
 .radioEmbed {
   display: block;
   width: 100%;
-  height: 400px;
+  height: 300px;
   border: 0;
+  border-radius: calc(var(--radius-md) - 4px);
 }
 
-/* Buttons */
+/* Atmosphere — a short, wordless full-bleed breather between sections */
 
-.primaryButton,
-.secondaryButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  padding: var(--space-3) var(--space-5);
-  font-family: var(--font-ui);
-  font-size: 0.9375rem;
-  font-weight: 700;
-  border-radius: var(--radius-md);
-  text-decoration: none;
-  text-align: center;
-  transition: filter 0.15s ease, border-color 0.15s ease,
-    background-color 0.15s ease;
+.atmosphere {
+  position: relative;
+  height: 42vh;
+  min-height: 220px;
+  overflow: hidden;
 }
 
-.primaryButton {
-  color: var(--color-accent-text);
-  background: var(--color-accent);
-  border: none;
+.atmosphereImage {
+  object-fit: cover;
+  object-position: 50% 45%;
 }
 
-.primaryButton:hover {
-  filter: brightness(1.08);
-}
+/* Submit — image + text pairing, stacked and asymmetric rather than a card */
 
-.secondaryButton {
-  color: var(--color-text);
-  background: transparent;
-  border: 1px solid var(--color-border-strong);
-}
-
-.secondaryButton:hover {
-  border-color: var(--color-text-muted);
-  background: var(--color-surface-hover);
-}
-
-.primaryButton:focus-visible,
-.secondaryButton:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
-}
-
-.socialRow {
+.submitSection {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  gap: var(--space-3);
-  width: 100%;
 }
 
-/* Enhancement: matches the existing >=481px breakpoint used across the submission flow */
+.submitImageWrap {
+  position: relative;
+  height: 46vh;
+  min-height: 280px;
+}
+
+.submitImage {
+  object-fit: cover;
+}
+
+.submitContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-6) var(--space-4);
+}
+
+/* Enhancement: matches the >=481px breakpoint used across the submission flow */
 @media (min-width: 481px) {
-  .page {
-    padding: var(--space-8) var(--space-4) 0;
-    gap: var(--space-8);
+  .heroContent,
+  .radioContent {
+    padding-left: var(--space-6);
+    padding-right: var(--space-6);
   }
 
   .heroActions {
     flex-direction: row;
-    justify-content: center;
-    max-width: none;
-    width: auto;
+    gap: var(--space-6);
   }
 
-  .primaryButton,
-  .secondaryButton {
-    width: auto;
-  }
-
-  .radioSection,
-  .submitSection,
-  .connectSection {
+  .submitContent {
     padding: var(--space-6);
   }
+}
 
-  .radioEmbed {
-    height: 450px;
+/* Enhancement: asymmetric two-column split for the Submit section on wider viewports */
+@media (min-width: 700px) {
+  .submitSection {
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 480px;
   }
 
-  .socialRow {
-    flex-direction: row;
-    width: auto;
+  .submitImageWrap {
+    flex: 1 1 55%;
+    height: auto;
+    min-height: 0;
+  }
+
+  .submitContent {
+    flex: 1 1 45%;
+    justify-content: center;
+    padding: var(--space-8);
+  }
+
+  .radioContent {
+    padding-left: var(--space-8);
+  }
+
+  .heroContent {
+    padding-left: var(--space-8);
+    padding-bottom: var(--space-8);
+  }
+
+  .heroLogo {
+    width: 72px;
   }
 }

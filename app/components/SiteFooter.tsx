@@ -25,31 +25,34 @@ export default function SiteFooter() {
           </Link>
         </nav>
 
-        <div className={styles.social}>
-          <a
-            href="https://www.instagram.com/lmnuk_/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.socialLink}
-          >
-            Instagram
-          </a>
-          <a
-            href="https://soundcloud.com/lmnuk"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.socialLink}
-          >
-            SoundCloud
-          </a>
-          <a
-            href="https://linktr.ee/LMNUK"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.socialLink}
-          >
-            All links
-          </a>
+        <div className={styles.socialGroup}>
+          <span className={styles.socialLabel}>Stay connected</span>
+          <div className={styles.social}>
+            <a
+              href="https://www.instagram.com/lmnuk_/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.socialLink}
+            >
+              Instagram
+            </a>
+            <a
+              href="https://soundcloud.com/lmnuk"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.socialLink}
+            >
+              SoundCloud
+            </a>
+            <a
+              href="https://linktr.ee/LMNUK"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.socialLink}
+            >
+              All links
+            </a>
+          </div>
         </div>
 
         <p className={styles.copyright}>© {new Date().getFullYear()} LMN</p>
