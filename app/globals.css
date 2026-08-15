@@ -11,6 +11,9 @@
   --color-accent-text: #14130f;
   /* Fill-only accent (progress dot, atmospheric glow) — fails contrast as a border/outline, never use it as one. */
   --color-accent-earth: #4a5240;
+  /* Provisional — observed neon pink/magenta glow used on lmnuk.com's hero and SoundCloud avatar (2026-08-15 site visit).
+     Fill/glow-only (radial gradients, small highlights), homepage only. Not a confirmed brand hex, see OQ-13. */
+  --color-signal: #ff3d6e;
 
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
