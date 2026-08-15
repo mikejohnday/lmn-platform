@@ -91,7 +91,7 @@ After each slice, run whatever checks exist — build, typecheck, lint, tests �
 
 Manually check the things automated tests will not catch: the flow works end to end in a browser at 375px, and every visible string still matches the docs.
 
-Do not report work as complete while checks are failing or a slice is half-built.
+Do not report a feature or slice as complete while checks are failing or work remains unfinished. Unfinished work may still be checkpointed and handed over accurately via docs/current-state.md.
 
 ---
 
@@ -107,3 +107,17 @@ Do not report work as complete while checks are failing or a slice is half-built
 ## 10. When in doubt
 
 Ask. An unanswered question costs a message; a wrong assumption baked into the build costs a rewrite and quietly corrupts a specification that took real effort to sign off.
+
+---
+
+## 11. Project memory (`docs/current-state.md`)
+
+`docs/current-state.md` is a short, current-only handover card — not a changelog, diary, or roadmap. Git history is authoritative for the past; this file describes *now*. Full behaviour is documented in its own header comment-equivalent — in short:
+
+**Start of a fresh session:** ask "Want me to refresh from the LMN project state before we start?" before consuming context. If yes: read `current-state.md`, the relevant `/docs` files it points to, `git status`, and recent commits if needed — then give a short orientation (where things are, what's unverified, what Mike said to do next, if anything) and wait. Never start on a recorded "Next Time" item just because it's written down — it's context, not permission. If no, skip the refresh.
+
+**End of session / checkpoint** (triggered by "checkpoint", "handover", "I'm done for today", "we're stopping here", or similar): inspect git status/diff and actual completed vs. unfinished work, run proportionate checks, rewrite `current-state.md` to match reality exactly (replace stale content, don't append), then offer a git checkpoint. If Mike hasn't said what's next, record "Next direction not yet decided — ask Mike" — never invent one.
+
+**Git checkpoint offer:** confirm the correct branch, stage the relevant changes, commit with an honest message (`wip: ...` if incomplete), and offer to push the current feature branch. A checkpoint means "recoverable state," not "finished." Never merge to `main`, deploy, or tag a release just because a session ended, and never do those things without Mike explicitly asking. If work turns out to be sitting directly on `main`, flag it before committing and ask how to proceed.
+
+Do not update `current-state.md` on every small edit — only at an explicit checkpoint or when a major state change makes it materially wrong. Do not auto-commit without approval; offer first.
